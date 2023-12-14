@@ -1,0 +1,10 @@
+import mongoose from 'mongoose'
+import 'dotenv/config'
+
+mongoose.connect(process.env.DATABASE_URI)
+  .then(() => {
+    console.log('Database connection stablished')
+  })
+  .catch(error => {
+    console.error(error)
+  })
