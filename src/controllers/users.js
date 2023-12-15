@@ -6,8 +6,8 @@ export class UserController {
       .then((users) => {
         res.status(200).json(users)
       })
-      .catch(error => {
-        res.status(500).json(error)
+      .catch(err => {
+        res.status(500).json(err)
       })
   }
 
@@ -19,8 +19,8 @@ export class UserController {
 
         res.status(200).json(user)
       })
-      .catch(error => {
-        res.status(500).json(error)
+      .catch(err => {
+        res.status(500).json(err)
       })
   }
 
@@ -29,8 +29,8 @@ export class UserController {
       .then((user) => {
         res.status(201).json(user)
       })
-      .catch(error => {
-        res.status(500).json(error)
+      .catch(err => {
+        res.status(500).json(err)
       })
   }
 
@@ -42,8 +42,9 @@ export class UserController {
 
         res.status(200).json(status)
       })
-      .catch(error => {
-        res.status(500).json(error)
+      .catch(err => {
+        console.log(err)
+        res.status(500).json(err)
       })
   }
 }

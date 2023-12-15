@@ -3,8 +3,8 @@ import 'dotenv/config'
 
 mongoose.connect(process.env.DATABASE_URI)
   .then(() => {
-    console.log('Database connection stablished')
+    console.info('Database connection stablished')
   })
-  .catch(error => {
-    console.error(error)
+  .catch(err => {
+    console.error(err)
   })
