@@ -15,10 +15,15 @@ export class AuthController {
 
           const token = generateToken({ _id: user._id })
 
-          res.status(200).json({
+          res
+          .cookie('session', token, {
+            httpOnly: true,
+            secure: process.env.APP_ENV === 'production'
+          })
+          .status(200)
+          .json({
             email: user.email,
-            username: user.username,
-            token
+            username: user.username
           })
         })
       })
@@ -29,7 +34,13 @@ export class AuthController {
       .then((user) => {
         const token = generateToken({ _id: user._id })
 
-        res.status(201).json({
+        res
+        .cookie('session', token, {
+          httpOnly: true,
+          secure: process.env.APP_ENV === 'production'
+        })
+        .status(201)
+        .json({
           email: user.email,
           username: user.username,
           token
@@ -41,5 +52,12 @@ export class AuthController {
         console.error(error)
         res.status(500).json(error)
       })
+  }
+
+  static async signout (req, res) {
+    return res
+      .clearCookie('session')
+      .status(200)
+      .json({message: 'Successfully logged out'})
   }
 }

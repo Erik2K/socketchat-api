@@ -4,18 +4,16 @@ import userModel from '../models/user.js'
 
 export const authMiddleware = (role) => {
   return (req, res, next) => {
-    const token = req.header('Authorization')?.replace('Bearer', '').trim()
+    const token = req.cookies.session;
 
     if (!token) return res.status(401).json({ error: 'Access denied' })
 
     jwt.verify(token, process.env.TOKEN_SECRET, (err, decoded) => {
       if (err) return res.status(401).json({ error: 'Invalid token' })
 
-      console.log(decoded)
-
       userModel.findOne({ _id: decoded._id })
         .then((user) => {
-          if (!user?.roles.includes(role)) return res.status(401).json({ error: 'Access denied' })
+          if (!role.includes(user?.role)) return res.status(401).json({ error: 'Access denied' })
 
           next()
         })
