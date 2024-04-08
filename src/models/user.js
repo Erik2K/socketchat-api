@@ -1,5 +1,4 @@
 import mongoose, { Schema } from 'mongoose'
-import 'dotenv/config'
 import bcrypt from 'bcrypt'
 import roles from '../../config/roles.js'
 

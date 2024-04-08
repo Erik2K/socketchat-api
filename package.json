@@ -8,7 +8,7 @@
   "license": "ISC",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "node --watch app.js"
+    "dev": "node -r dotenv/config --watch app.js"
   },
   "dependencies": {
     "bcrypt": "5.1.1",
@@ -25,7 +25,7 @@
     "@types/jsonwebtoken": "^9.0.5",
     "@types/morgan": "^1.9.9",
     "@types/swagger-ui-express": "^4.1.6",
-    "dotenv": "^16.3.1",
+    "dotenv": "^16.4.5",
     "standard": "^17.1.0"
   },
   "eslintConfig": {

@@ -1,5 +1,4 @@
 import jwt from 'jsonwebtoken'
-import 'dotenv/config'
 import userModel from '../models/user.js'
 
 export const authMiddleware = (role) => {
