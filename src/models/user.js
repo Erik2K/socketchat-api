@@ -23,8 +23,7 @@ const UserSchema = new Schema({
     type: String,
     default: roles.DEFAULT
   }
-},
-{
+},{
   timestamps: true
 })
 
@@ -37,6 +36,17 @@ UserSchema.pre('save', function (next) {
     this.password = hash
     next()
   })
+})
+
+UserSchema.pre('findOneAndUpdate', function (next) {
+  if (this._update.password) {
+    bcrypt.hash(this._update.password, parseInt(process.env.SALT_WORK_FACTOR), (err, hash) => {
+      if (err) return next(err)
+  
+      this._update.password = hash
+      next()
+    })
+  }
 })
 
 UserSchema.methods.comparePassword = function (password, callback) {

@@ -7,13 +7,13 @@ const MessageSchema = new Schema({
   },
 
   user: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: 'User',
     required: true
   },
 
   chat: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: 'Chat',
     required: true
   }
