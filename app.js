@@ -6,4 +6,3 @@ import './server/database.js'
 server.listen(process.env.PORT, () => {
   console.info('Server started on ' + process.env.PORT)
 })
-

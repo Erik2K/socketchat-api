@@ -3,7 +3,7 @@ import userModel from '../models/user.js'
 
 export const authMiddleware = (role) => {
   return (req, res, next) => {
-    const token = req.cookies.session;
+    const token = req.cookies.session
 
     if (!token) return res.status(401).json({ error: 'Access denied' })
 

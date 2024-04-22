@@ -18,15 +18,15 @@ export class AuthController {
           const token = generateToken({ _id: user._id })
 
           res
-          .cookie('session', token, {
-            httpOnly: true,
-            secure: process.env.APP_ENV === 'production'
-          })
-          .status(200)
-          .json({
-            email: user.email,
-            username: user.username
-          })
+            .cookie('session', token, {
+              httpOnly: true,
+              secure: process.env.APP_ENV === 'production'
+            })
+            .status(200)
+            .json({
+              email: user.email,
+              username: user.username
+            })
         })
       })
   }
@@ -39,16 +39,16 @@ export class AuthController {
         sendMail([user.email], 'Welcome', `Hi ${user.username}, Welcome to SocketChat!`)
 
         res
-        .cookie('session', token, {
-          httpOnly: true,
-          secure: process.env.APP_ENV === 'production'
-        })
-        .status(201)
-        .json({
-          email: user.email,
-          username: user.username,
-          token
-        })
+          .cookie('session', token, {
+            httpOnly: true,
+            secure: process.env.APP_ENV === 'production'
+          })
+          .status(201)
+          .json({
+            email: user.email,
+            username: user.username,
+            token
+          })
       })
       .catch(error => {
         if (error.code === 11000) return res.status(409).json('User already exists')
@@ -61,55 +61,55 @@ export class AuthController {
     return res
       .clearCookie('session')
       .status(200)
-      .json({message: 'Successfully logged out'})
+      .json({ message: 'Successfully logged out' })
   }
 
   static async recover (req, res) {
     const { email } = req.body
 
-    UserModel.findOne({email})
+    UserModel.findOne({ email })
       .then((user) => {
         if (!user) return res.status(404).json('User not found')
-        
-        RecoveryModel.create({user: user._id})
-        .then((recovery) => {
-          const { BASE_URL } = process.env
 
-          sendMail(
-            [user.email], 
-            'Recover password', 
-            `Hi ${user.username},<br><br>To reset your password click the link below<br><br>${BASE_URL}/api/recover/${recovery.token}`
-          )
+        RecoveryModel.create({ user: user._id })
+          .then((recovery) => {
+            const { BASE_URL } = process.env
 
-          return res.status(201).json()
-        })
+            sendMail(
+              [user.email],
+              'Recover password',
+              `Hi ${user.username},<br><br>To reset your password click the link below<br><br>${BASE_URL}/api/recover/${recovery.token}`
+            )
+
+            return res.status(201).json()
+          })
       })
       .catch(error => {
         res.status(500).json(error)
       })
   }
-  
+
   static async checkRecover (req, res) {
     const { token } = req.params
 
     if (!token) return res.status(404).json()
 
     RecoveryModel.findOne({ token })
-    .then((recovery) => {
-      if (!recovery) return res.status(404).json('Recovery token not found')
+      .then((recovery) => {
+        if (!recovery) return res.status(404).json('Recovery token not found')
 
-      UserModel.findOne({_id: recovery.user})
-      .then((user) => {
-        if (!user) return res.status(404).json('Uer associated to the recovery token not found') 
+        UserModel.findOne({ _id: recovery.user })
+          .then((user) => {
+            if (!user) return res.status(404).json('Uer associated to the recovery token not found')
 
-        res
-        .status(200)
-        .json({ email: user.email })
+            res
+              .status(200)
+              .json({ email: user.email })
+          })
       })
-    })
-    .catch(error => {
-      return res.status(500).json(error)
-    })
+      .catch(error => {
+        return res.status(500).json(error)
+      })
   }
 
   static async updatePassword (req, res) {
@@ -117,22 +117,22 @@ export class AuthController {
 
     if (!token || !password) return res.status(400).json()
 
-    RecoveryModel.findOne({token})
-    .then((recovery) => {
-      if (!recovery) return res.status(404).json('Recovery token not found')
+    RecoveryModel.findOne({ token })
+      .then((recovery) => {
+        if (!recovery) return res.status(404).json('Recovery token not found')
 
-      UserModel.findOneAndUpdate({ _id: recovery.user }, { password })
-      .then(user => {
-        if (!user) return res.status(404).json('User not found')
-      })
+        UserModel.findOneAndUpdate({ _id: recovery.user }, { password })
+          .then(user => {
+            if (!user) return res.status(404).json('User not found')
+          })
 
-      RecoveryModel.deleteOne({ _id: recovery._id })
-      .then(() => {
-        return res.status(200).json()
+        RecoveryModel.deleteOne({ _id: recovery._id })
+          .then(() => {
+            return res.status(200).json()
+          })
       })
-    })
-    .catch(error => {
-      return res.status(500).json(error)
-    })
+      .catch(error => {
+        return res.status(500).json(error)
+      })
   }
 }

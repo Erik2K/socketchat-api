@@ -1,4 +1,4 @@
-import server from './server.js';
+import server from './server.js'
 import { Server } from 'socket.io'
 import config from '../config/socket.js'
 import { messageHandler } from '../src/handlers/message.js'
