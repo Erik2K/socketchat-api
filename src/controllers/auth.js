@@ -19,7 +19,6 @@ export class AuthController {
 
           res
             .cookie('session', token, {
-              httpOnly: true,
               secure: process.env.APP_ENV === 'production'
             })
             .status(200)
@@ -40,7 +39,6 @@ export class AuthController {
 
         res
           .cookie('session', token, {
-            httpOnly: true,
             secure: process.env.APP_ENV === 'production'
           })
           .status(201)

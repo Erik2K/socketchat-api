@@ -1,6 +1,6 @@
 export default {
   cors: {
-    origin: 'http://localhost:3000',
-    credentials: true
+    // origin: 'http://192.168.10.237:3000'
+    // credentials: true
   }
 }

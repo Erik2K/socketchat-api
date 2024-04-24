@@ -9,10 +9,10 @@ const io = new Server(server, config)
 
 // server events
 io.on('connection', (socket) => {
-  console.log('connected')
+  console.log({ socket: socket.id, connected: true })
 
   socket.on('disconnect', (reason) => {
-    console.log(`client ${socket.client.id} disconnected, reason: ${reason}`)
+    console.log({ socket: socket.id, connected: false, reason })
   })
 
   handshakeHandler(socket)

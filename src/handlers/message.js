@@ -1,4 +1,5 @@
 export const messageHandler = function (msg) {
   const socket = this
-  console.log(`${socket.client.id}: ${msg}`)
+  socket.broadcast.emit('message', msg)
+  console.log({ socket: socket.id, msg })
 }
