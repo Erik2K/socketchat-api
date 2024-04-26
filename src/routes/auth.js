@@ -7,7 +7,7 @@ export const authRouter = Router()
 
 authRouter.post('/signin', AuthController.signin)
 authRouter.post('/signup', AuthController.signup)
-authRouter.get('/signout', authMiddleware(roles.USER), AuthController.signout)
+authRouter.post('/signout', authMiddleware(roles.USER), AuthController.signout)
 authRouter.post('/recover', AuthController.recover)
 authRouter.get('/recover/:token', AuthController.checkRecover)
 authRouter.put('/recover', AuthController.updatePassword)

@@ -44,8 +44,7 @@ export class AuthController {
           .status(201)
           .json({
             email: user.email,
-            username: user.username,
-            token
+            username: user.username
           })
       })
       .catch(error => {
@@ -69,17 +68,21 @@ export class AuthController {
       .then((user) => {
         if (!user) return res.status(404).json('User not found')
 
-        RecoveryModel.create({ user: user._id })
-          .then((recovery) => {
-            const { BASE_URL } = process.env
+        RecoveryModel.deleteMany({ user: user._id })
+          .then(() => {
+            RecoveryModel.create({ user: user._id })
+              .then((recovery) => {
+                console.log(recovery)
+                const { WEB_URL } = process.env
 
-            sendMail(
-              [user.email],
-              'Recover password',
-              `Hi ${user.username},<br><br>To reset your password click the link below<br><br>${BASE_URL}/api/recover/${recovery.token}`
-            )
+                sendMail(
+                  [user.email],
+                  'Recover password',
+                  `Hi ${user.username},<br><br>To reset your password click the link below<br><br>${WEB_URL}/auth/recover/${recovery.token}`
+                )
 
-            return res.status(201).json()
+                return res.status(201).json()
+              })
           })
       })
       .catch(error => {
@@ -122,11 +125,17 @@ export class AuthController {
         UserModel.findOneAndUpdate({ _id: recovery.user }, { password })
           .then(user => {
             if (!user) return res.status(404).json('User not found')
-          })
 
-        RecoveryModel.deleteOne({ _id: recovery._id })
-          .then(() => {
-            return res.status(200).json()
+            RecoveryModel.deleteOne({ _id: recovery._id })
+              .then(() => {
+                sendMail(
+                  [user.email],
+                  'Password updated',
+                  `Hi ${user.username},<br><br> your password has been updated`
+                )
+
+                return res.status(200).json()
+              })
           })
       })
       .catch(error => {
