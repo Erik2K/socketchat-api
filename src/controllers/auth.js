@@ -14,7 +14,10 @@ export class AuthController {
       .then((user) => {
         if (!user) return res.status(404).json('User not found')
 
-        res.status(200).json(user)
+        res.status(200).json({
+          email: user.email,
+          username: user.username
+        })
       })
       .catch(err => {
         res.status(500).json(err)

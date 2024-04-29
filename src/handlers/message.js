@@ -1,5 +1,4 @@
 export const messageHandler = function (msg) {
   const socket = this
-  console.log(msg)
-  socket.to(msg.room).emit('message', msg.body)
+  socket.broadcast.to(msg.room).emit('message', msg)
 }

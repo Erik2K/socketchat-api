@@ -1,10 +1,10 @@
 import mongoose, { Schema } from 'mongoose'
 
 const RoomSchema = new Schema({
-  chats: [
+  users: [
     {
       type: Schema.Types.ObjectId,
-      ref: 'Chat'
+      ref: 'User'
     }
   ]
 },
