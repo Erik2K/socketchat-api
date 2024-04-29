@@ -7,6 +7,5 @@ export const userRouter = Router()
 
 userRouter.get('/', authMiddleware(roles.ADMIN), UserController.getAll)
 userRouter.post('/', authMiddleware(roles.ADMIN), UserController.create)
-
-userRouter.get('/:id', authMiddleware(roles.ADMIN), UserController.getById)
-userRouter.delete('/:id', authMiddleware(roles.ADMIN), UserController.delete)
+userRouter.get('/:userId', authMiddleware(roles.USER), UserController.getById)
+userRouter.delete('/:userId', authMiddleware(roles.USER, true), UserController.delete)

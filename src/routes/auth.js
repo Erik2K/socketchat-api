@@ -5,6 +5,7 @@ import roles from '../../config/roles.js'
 
 export const authRouter = Router()
 
+authRouter.get('/me', authMiddleware(roles.USER), AuthController.me)
 authRouter.post('/signin', AuthController.signin)
 authRouter.post('/signup', AuthController.signup)
 authRouter.post('/signout', authMiddleware(roles.USER), AuthController.signout)

@@ -13,12 +13,18 @@ const ChatSchema = new Schema({
     required: true
   },
 
-  messagees: [
+  messages: [
     {
       type: Schema.Types.ObjectId,
       ref: 'Message'
     }
-  ]
+  ],
+
+  room: {
+    type: Schema.Types.ObjectId,
+    ref: 'Room',
+    required: true
+  }
 },
 {
   timestamps: true

@@ -1,7 +1,8 @@
 import jwt from 'jsonwebtoken'
 import userModel from '../models/user.js'
+import roles from '../../config/roles.js'
 
-export const authMiddleware = (role) => {
+export const authMiddleware = (role, self) => {
   return (req, res, next) => {
     const token = req.cookies.session
 
@@ -12,7 +13,12 @@ export const authMiddleware = (role) => {
 
       userModel.findOne({ _id: decoded._id })
         .then((user) => {
-          if (!role.includes(user?.role)) return res.status(401).json({ error: 'Access denied' })
+          if (!role.includes(user.role)) return res.status(401).json({ error: 'Access denied' })
+
+          if (self && !roles.ADMIN.includes(user.role)) {
+            if (req.params.userId && req.params.userId !== decoded._id) return res.status(401).json({ error: 'Access denied' })
+            if (req.body.userId && req.body.userId !== decoded._id) return res.status(401).json({ error: 'Access denied' })
+          }
 
           next()
         })

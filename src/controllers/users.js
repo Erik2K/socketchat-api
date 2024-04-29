@@ -12,8 +12,8 @@ export class UserController {
   }
 
   static async getById (req, res) {
-    const { id } = req.params
-    UserModel.findById(id)
+    const { userId } = req.params
+    UserModel.findById(userId)
       .then((user) => {
         if (!user) return res.status(404).json('User not found')
 
@@ -35,8 +35,8 @@ export class UserController {
   }
 
   static async delete (req, res) {
-    const { id } = req.params
-    UserModel.deleteOne({ _id: id })
+    const { userId } = req.params
+    UserModel.deleteOne({ _id: userId })
       .then((status) => {
         if (!status.deletedCount) return res.status(404).json('User not found')
 

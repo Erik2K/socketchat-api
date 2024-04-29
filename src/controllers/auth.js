@@ -2,8 +2,25 @@ import UserModel from '../models/user.js'
 import RecoveryModel from '../models/recovery.js'
 import { generateToken } from '../helpers/generateToken.js'
 import { sendMail } from '../helpers/sendMail.js'
+import { verifyToken } from '../helpers/verifyToken.js'
 
 export class AuthController {
+  static async me (req, res) {
+    const token = req.cookies.session
+
+    const { _id } = verifyToken(token)
+
+    UserModel.findById(_id)
+      .then((user) => {
+        if (!user) return res.status(404).json('User not found')
+
+        res.status(200).json(user)
+      })
+      .catch(err => {
+        res.status(500).json(err)
+      })
+  }
+
   static async signin (req, res) {
     const { email, password } = req.body
 
