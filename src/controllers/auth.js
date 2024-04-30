@@ -15,6 +15,7 @@ export class AuthController {
         if (!user) return res.status(404).json('User not found')
 
         res.status(200).json({
+          _id: user._id,
           email: user.email,
           username: user.username
         })

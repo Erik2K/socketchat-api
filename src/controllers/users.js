@@ -47,4 +47,23 @@ export class UserController {
         res.status(500).json(err)
       })
   }
+
+  static async search (req, res) {
+    const { prompt } = req.params
+    UserModel.find(
+      {
+        $or: [
+          { username: { $regex: `.*${prompt}.*` } },
+          { email: { $regex: `.*${prompt}.*` } }
+        ]
+      }
+    )
+      .limit(15)
+      .then(users => {
+        res.status(200).json(users)
+      })
+      .catch(error => {
+        return res.status(500).json(error)
+      })
+  }
 }

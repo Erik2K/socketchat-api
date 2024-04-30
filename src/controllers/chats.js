@@ -2,7 +2,6 @@ import chatModel from '../models/chat.js'
 import RoomModel from '../models/room.js'
 import UserModel from '../models/user.js'
 import { verifyToken } from '../helpers/verifyToken.js'
-import user from '../models/user.js'
 
 export class ChatController {
   static async getAll (req, res) {
@@ -33,7 +32,16 @@ export class ChatController {
 
     const { _id } = verifyToken(token)
 
-    chatModel.find({ user: _id }, { messages: { $slice: -1 } }).populate('messages')
+    chatModel.find({ user: _id }, { messages: { $slice: -1 } })
+      .populate('messages', 'body user')
+      .populate({
+        path: 'room',
+        populate: {
+          path: 'users',
+          select: 'username',
+          match: { _id: { $nin: _id } }
+        }
+      })
       .then(chats => {
         res.status(200).json(chats)
       })
