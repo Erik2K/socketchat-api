@@ -1,9 +1,14 @@
-import { findChatsAndCreate } from '../helpers/findChatsAndCreate.js'
+import { connectUsersToRoom } from '../helpers/connectUsersToRoom.js'
+import { persistMessage } from '../helpers/persistMessage.js'
 
-export const messageHandler = function (msg) {
+export const messageHandler = async function (message) {
   const socket = this
 
-  findChatsAndCreate(msg.room)
+  console.log(message)
 
-  socket.broadcast.to(msg.room).emit('message', msg)
+  await connectUsersToRoom(message.room, message.email)
+
+  await persistMessage(message)
+
+  socket.broadcast.to(message.room).emit('message', message)
 }

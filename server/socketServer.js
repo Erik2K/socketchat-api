@@ -18,5 +18,6 @@ io.on('connection', (socket) => {
   handshakeHandler(socket)
 
   socket.on('message', messageHandler)
-  socket.on('join', (room) => { socket.join(room) })
 })
+
+export default io

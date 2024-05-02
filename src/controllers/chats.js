@@ -17,6 +17,15 @@ export class ChatController {
   static async getById (req, res) {
     const { id } = req.params
     chatModel.findById(id)
+      .select('_id')
+      .populate({
+        path: 'messages',
+        select: 'body user',
+        populate: {
+          path: 'user',
+          select: 'username'
+        }
+      })
       .then((chat) => {
         if (!chat) return res.status(404).json('Chat not found')
 
@@ -32,10 +41,16 @@ export class ChatController {
 
     const { _id } = verifyToken(token)
 
-    chatModel.find({ user: _id }, { messages: { $slice: -1 } })
-      .populate('messages', 'body user')
+    chatModel.find({ user: _id })
+      .select('messages room')
+      .slice('messages', -1)
+      .populate({
+        path: 'messages',
+        select: 'body user'
+      })
       .populate({
         path: 'room',
+        select: 'users',
         populate: {
           path: 'users',
           select: 'username',
@@ -60,7 +75,7 @@ export class ChatController {
 
     UserModel.find({ email: { $in: users } })
       .then(users => {
-        RoomModel.findOne({ users: { $size: users.length + 1, $in: [_id, ...users.map(u => u._id)] } })
+        RoomModel.findOne({ users: [_id, ...users.map(u => u._id)] })
           .then(room => {
             if (room) {
               chatModel.create({ user: _id, room: room._id })
