@@ -54,32 +54,49 @@ This project uses the following environment variables:
 > - [x] Private Chat rooms
 > - [x] Search users and create new chats
 > - [x] Email communication
+> - [ ] New messages number
 
 > ## v0.2.0
-> 
-
+> - [ ] Unit testing
 
 > ## v0.3.0
-> 
+> - [ ] E2E encryption supoort
+> - [ ] E2E password encryption
+> - [ ] E2E message encryption
 
 > ## v0.4.0
-> 
+> - [ ] User profiles
+> - [ ] Friends
+> - [ ] Account remove
+> - [ ] Blocked users
 
 > ## v0.5.0
-> 
+> - [ ] Chat groups
+> - [ ] Pinned message
+> - [ ] Reply message
+> - [ ] Favorite message
+> - [ ] Search messages
 
 > ## v0.6.0
-> 
+> - [ ] User status
+> - [ ] Message status
+> - [ ] Remove messages
+> - [ ] Remove chats
 
 > ## v0.7.0
-> 
+> - [ ] Image message
+> - [ ] Image compression
+> - [ ] Chat background image
 
 > ## v0.8.0
-> 
+> - [ ] Emoji support
+> - [ ] Emoji reaction
 
 > ## v0.9.0
-> 
+> - [ ] Easter eggs
+> - [ ] Attached files
+> - [ ] Location message
+> - [ ] Audio message
 
 > ## v1.0.0
-> 
 > - [ ] Stable version with all core features implemented and ready for production use
