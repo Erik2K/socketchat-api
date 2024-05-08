@@ -1,7 +1,7 @@
 
 # SocketChat API
 
-SocketChat API is a personal learning project and side project showcase. It offers real-time chat functionality implemented with Node.js, Express.js, and Socket.IO.
+SocketChat is a personal learning project and side project showcase. It offers real-time chat functionality implemented with Node.js, Express.js, and Socket.IO.
 
 
 ## Run Locally
