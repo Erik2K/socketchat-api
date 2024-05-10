@@ -54,7 +54,7 @@ This project uses the following environment variables:
 > - [x] Private Chat rooms
 > - [x] Search users and create new chats
 > - [x] Email communication
-> - [ ] New messages number
+> - [x] New messages number
 
 > ## v0.2.0
 > - [ ] Unit testing
