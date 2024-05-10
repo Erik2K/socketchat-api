@@ -95,6 +95,7 @@ This project uses the following environment variables:
 
 > ## v0.9.0
 > - [ ] Easter eggs
+> - [ ] Guest sessions
 
 > ## v1.0.0
 > - [ ] Stable version with all core features implemented and ready for production use
