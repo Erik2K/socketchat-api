@@ -44,6 +44,7 @@ export class AuthController {
             })
             .status(200)
             .json({
+              _id: user._id,
               email: user.email,
               username: user.username
             })
@@ -64,6 +65,7 @@ export class AuthController {
           })
           .status(201)
           .json({
+            _id: user._id,
             email: user.email,
             username: user.username
           })

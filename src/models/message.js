@@ -16,6 +16,12 @@ const MessageSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Chat',
     required: true
+  },
+
+  status: {
+    type: String,
+    enum: ['not-readed', 'readed'],
+    default: 'not-readed'
   }
 },
 {

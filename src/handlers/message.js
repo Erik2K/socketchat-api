@@ -4,11 +4,11 @@ import { persistMessage } from '../helpers/persistMessage.js'
 export const messageHandler = async function (message) {
   const socket = this
 
-  console.log(message)
-
-  await connectUsersToRoom(message.room, message.email)
+  await connectUsersToRoom(message.room)
 
   await persistMessage(message)
 
   socket.broadcast.to(message.room).emit('message', message)
+
+  console.log(message)
 }
